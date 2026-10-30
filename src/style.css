@@ -1,21 +1,22 @@
 /* ============================================================
-   BelajarLog — style.css
+   BelajarLog · style.css
    Token & gaya mengikuti bahasa visual proyek sejenis
    (dark, amber aksen, hijau/merah untuk positif/negatif).
    ============================================================ */
 :root {
-  --bg: #0c0f13;
-  --surface: #12161c;
-  --surface-2: #171c23;
-  --line: #262d37;
-  --line-strong: #333c48;
-  --text: #e9edf2;
-  --muted: #98a3b1;
-  --muted-2: #848f9c;
-  --accent: #e3a83c;
-  --accent-ink: #1a1405;
-  --profit: #3fc37a;
-  --loss: #ef5f56;
+  /* tema terang: abu-abu kebiruan + aksen indigo */
+  --bg: #f4f6fa;
+  --surface: #ffffff;
+  --surface-2: #eef2f7;
+  --line: #e1e7ef;
+  --line-strong: #c9d2de;
+  --text: #16202e;
+  --muted: #5a6678;
+  --muted-2: #77839a;
+  --accent: #3b5bdb;
+  --accent-ink: #ffffff;
+  --profit: #15803d;
+  --loss: #dc2626;
   --radius: 10px;
   --pad: clamp(16px, 3.2vw, 34px);
   --font: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
@@ -29,8 +30,8 @@ body {
   font-size: 15px;
   line-height: 1.5;
   background:
-    radial-gradient(900px 460px at 88% -6%, rgba(63, 195, 122, .055), transparent 62%),
-    radial-gradient(1100px 560px at 4% -14%, rgba(227, 168, 60, .07), transparent 60%),
+    radial-gradient(900px 460px at 88% -6%, rgba(22, 163, 74, .05), transparent 62%),
+    radial-gradient(1100px 560px at 4% -14%, rgba(59, 91, 219, .06), transparent 60%),
     var(--bg);
   min-height: 100vh;
 }
@@ -41,7 +42,7 @@ p { margin: 0; }
 .num { font-variant-numeric: tabular-nums; }
 
 /* ---------- top bar ---------- */
-.topbar { border-bottom: 1px solid var(--line); background: rgba(12, 15, 19, .8); backdrop-filter: blur(6px); position: sticky; top: 0; z-index: 5; }
+.topbar { border-bottom: 1px solid var(--line); background: rgba(244, 246, 250, .85); backdrop-filter: blur(6px); position: sticky; top: 0; z-index: 5; }
 .topbar-inner { max-width: 960px; margin: 0 auto; padding: 14px var(--pad); display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
 .brand { display: flex; align-items: center; gap: 9px; }
 .brand-mark { width: 26px; height: 26px; display: grid; place-items: center; border-radius: 7px; background: var(--surface-2); color: var(--accent); border: 1px solid var(--line-strong); }
@@ -53,7 +54,8 @@ main { max-width: 960px; margin: 0 auto; padding: clamp(18px, 3vw, 32px) var(--p
 .hint { color: var(--muted-2); font-size: .8rem; }
 
 /* ---------- ledger ---------- */
-.ledger { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+/* minmax 190px supaya 4 kartu muat sebaris pada lebar desktop */
+.ledger { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
 .stat { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; display: grid; gap: 4px; }
 .stat-label { color: var(--muted); font-size: .76rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
 .stat-value { font-size: 1.7rem; font-weight: 650; }
@@ -75,7 +77,7 @@ input {
   font: inherit;
 }
 input:hover { border-color: var(--line-strong); }
-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(227, 168, 60, .18); }
+input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(59, 91, 219, .22); }
 .actions { grid-column: 1 / -1; display: flex; align-items: center; justify-content: flex-end; gap: 12px; }
 .form-note { color: var(--loss); font-size: .8rem; margin-right: auto; }
 .btn-primary {
@@ -106,7 +108,7 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px 
 footer { border-top: 1px solid var(--line); color: var(--muted-2); font-size: .78rem; text-align: center; padding: 16px var(--pad) 28px; }
 
 /* ---------- kartu streak & grafik ---------- */
-.stat.streak { border-color: rgba(227, 168, 60, .45); }
+.stat.streak { border-color: rgba(59, 91, 219, .45); }
 .stat.streak .stat-value { color: var(--accent); }
 .spacer { flex: 1; }
 .toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-left: auto; }
@@ -120,7 +122,7 @@ footer { border-top: 1px solid var(--line); color: var(--muted-2); font-size: .7
 .chart { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; align-items: end; height: 190px; }
 .bar-col { display: grid; grid-template-rows: auto 1fr auto; gap: 6px; height: 100%; align-items: end; justify-items: center; }
 .bar { width: min(46px, 70%); border-radius: 6px 6px 3px 3px; background: var(--surface-2); border: 1px solid var(--line); align-self: end; min-height: 0; }
-.bar.on { background: linear-gradient(180deg, rgba(227, 168, 60, .9), rgba(227, 168, 60, .35)); border-color: rgba(227, 168, 60, .6); }
+.bar.on { background: linear-gradient(180deg, rgba(59, 91, 219, .9), rgba(59, 91, 219, .35)); border-color: rgba(59, 91, 219, .6); }
 .bar-col.is-today .bar-day { color: var(--accent); font-weight: 700; }
 .bar-val { font-size: .72rem; color: var(--muted); white-space: nowrap; }
 .bar-day { font-size: .72rem; color: var(--muted-2); }

@@ -3,8 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="dark">
-<title>BelajarLog — Jurnal Belajar Harian</title>
+<meta name="color-scheme" content="light">
+<meta name="description" content="BelajarLog, jurnal belajar harian yang berjalan 100% lokal di browser. Catat sesi (topik, durasi, refleksi), pantau streak dan grafik 7 hari. Gratis, open source, tanpa server dan tanpa akun.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%233b5bdb'/%3E%3Cpath d='M8 24V8M8 24h16' stroke='%23fff' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3Crect x='12.5' y='14' width='3.2' height='7' fill='%23fff'/%3E%3Crect x='18.5' y='10' width='3.2' height='11' fill='%23fff'/%3E%3C/svg%3E">
+<title>BelajarLog | Jurnal Belajar Harian</title>
 <link rel="stylesheet" href="/src/style.css">
 </head>
 <body>
@@ -17,7 +19,7 @@
       </span>
       <h1>BelajarLog</h1>
     </div>
-    <p class="tagline">Jurnal belajar harian — lokal, tanpa akun</p>
+    <p class="tagline">Jurnal Belajar Harian</p>
   </div>
 </header>
 
@@ -30,23 +32,23 @@
     <div class="ledger">
       <div class="stat">
         <span class="stat-label">Hari ini</span>
-        <span class="stat-value num" id="sumToday">—</span>
-        <span class="stat-note" id="sumTodayMeta">—</span>
+        <span class="stat-value num" id="sumToday">…</span>
+        <span class="stat-note" id="sumTodayMeta">…</span>
       </div>
       <div class="stat streak">
         <span class="stat-label">Streak</span>
-        <span class="stat-value num" id="sumStreak">—</span>
-        <span class="stat-note" id="sumStreakMeta">—</span>
+        <span class="stat-value num" id="sumStreak">…</span>
+        <span class="stat-note" id="sumStreakMeta">…</span>
       </div>
       <div class="stat">
         <span class="stat-label">7 hari terakhir</span>
-        <span class="stat-value num" id="sumWeek">—</span>
-        <span class="stat-note" id="sumWeekMeta">—</span>
+        <span class="stat-value num" id="sumWeek">…</span>
+        <span class="stat-note" id="sumWeekMeta">…</span>
       </div>
       <div class="stat">
         <span class="stat-label">Total</span>
-        <span class="stat-value num" id="sumTotal">—</span>
-        <span class="stat-note" id="sumTotalMeta">—</span>
+        <span class="stat-value num" id="sumTotal">…</span>
+        <span class="stat-note" id="sumTotalMeta">…</span>
       </div>
     </div>
   </section>
@@ -64,7 +66,7 @@
   <section aria-labelledby="catat-h">
     <div class="section-head">
       <h2 id="catat-h">Catat sesi</h2>
-      <p class="hint">Isi singkat cukup — yang penting konsisten</p>
+      <p class="hint">Isi singkat cukup, yang penting konsisten</p>
     </div>
     <form class="form" id="sessionForm" novalidate>
       <div class="field">
@@ -100,14 +102,14 @@
         <button type="button" class="btn-ghost" id="importCsv" title="Impor sesi dari file CSV (format Ekspor CSV atau kolom umum)">Impor CSV</button>
         <input type="file" id="importFile" accept=".csv,text/csv" hidden>
         <button type="button" class="btn-ghost" id="backupBtn" title="Unduh seluruh jurnal sebagai file JSON">Backup JSON</button>
-        <button type="button" class="btn-ghost" id="restoreBtn" title="Pulihkan dari file backup — isi digabungkan">Pulihkan</button>
+        <button type="button" class="btn-ghost" id="restoreBtn" title="Pulihkan dari file backup (isi digabungkan)">Pulihkan</button>
         <input type="file" id="restoreFile" accept="application/json,.json" hidden>
       </div>
     </div>
     <p class="form-note" id="csvNote" hidden aria-live="polite"></p>
     <p class="form-note" id="backupNote" hidden aria-live="polite"></p>
     <div class="empty" id="emptyState" hidden>
-      <p>Belum ada sesi. Catat sesi belajar pertama — sesingkat 15 menit pun sudah terhitung.</p>
+      <p>Belum ada sesi. Catat sesi belajar pertama, sesingkat 15 menit pun sudah terhitung.</p>
     </div>
     <ul class="list" id="sessionList"></ul>
   </section>

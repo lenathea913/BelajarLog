@@ -1,7 +1,7 @@
 /* ============================================================
-   BelajarLog — backup.js : Backup & Pulihkan file JSON.
+   BelajarLog · backup.js : Backup & Pulihkan file JSON.
    Unduh seluruh jurnal sebagai belajarlog-backup-YYYY-MM-DD.json,
-   atau pulihkan dari file cadangan — isi file DIGABUNGKAN dengan
+   atau pulihkan dari file cadangan; isi file DIGABUNGKAN dengan
    jurnal saat ini (data lama tidak hilang).
    ============================================================ */
 import { $, sortedSessions, restoreSessions } from "./store.js";
@@ -76,7 +76,7 @@ async function onFile(ev, render) {
   if (typeof render === "function") render();
   note("ok", res.added > 0
     ? "Backup dipulihkan (+" + res.added + " sesi baru)."
-    : "Backup dipulihkan — tidak ada sesi baru, semua sudah ada.");
+    : "Backup dipulihkan: tidak ada sesi baru, semua sudah ada.");
 }
 
 /** pasang handler tombol Backup & Pulihkan (dipanggil dari main.js) */

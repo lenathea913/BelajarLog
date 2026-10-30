@@ -1,5 +1,5 @@
 /* ============================================================
-   BelajarLog — csv.js : ekspor & impor sesi belajar ke CSV.
+   BelajarLog · csv.js : ekspor & impor sesi belajar ke CSV.
    Skema kolom: Tanggal, Topik, Menit, Refleksi.
    Impor menerima format sendiri plus alias kolom umum
    (date/topic/minutes/…), dengan deteksi duplikat.
@@ -147,7 +147,7 @@ function initCsv(render) {
       el.className = "form-note " + (res.added ? "pos" : "neg");
       el.textContent = res.added
         ? "✓ " + res.added + " sesi diimpor" + (res.skipped ? ", " + res.skipped + " baris dilewati/duplikat." : ".")
-        : "⚠️ Tidak ada sesi baru — semua sudah ada atau tidak valid.";
+        : "⚠️ Tidak ada sesi baru: semua sudah ada atau tidak valid.";
       if (res.added && typeof render === "function") render();
     } catch (err) {
       el.hidden = false;

@@ -1,5 +1,5 @@
 /* ============================================================
-   BelajarLog — jurnal belajar harian (lokal, tanpa server)
+   BelajarLog · jurnal belajar harian (lokal, tanpa server)
    store.js : state aplikasi, penyimpanan, format tanggal/durasi.
    Modul ini bebas DOM (kecuali tidak ada sama sekali).
    ============================================================ */
@@ -25,7 +25,7 @@ function save() {
     localStorage.setItem(KEY_SESSIONS, JSON.stringify(sessions));
     return true;
   } catch (e) {
-    return false; // penuh / diblokir — pemanggil bisa menampilkan peringatan
+    return false; // penuh / diblokir: pemanggil bisa menampilkan peringatan
   }
 }
 
@@ -141,7 +141,7 @@ function dailySeries(list, days = 7) {
 
 /* ---------- pulihkan (dipakai backup JSON) ---------- */
 /**
- * Gabungkan sesi dari file backup — data lama tidak hilang.
+ * Gabungkan sesi dari file backup, data lama tidak hilang.
  * @returns {{ok:boolean, added?:number}}
  */
 function restoreSessions(list) {

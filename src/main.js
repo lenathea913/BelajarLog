@@ -1,5 +1,5 @@
 /* ============================================================
-   BelajarLog — main.js : render ringkasan (termasuk streak &
+   BelajarLog · main.js : render ringkasan (termasuk streak &
    grafik 7 hari), form pencatatan, hapus sesi, ekspor/impor
    CSV, backup/pulihkan JSON, init.
    ============================================================ */
@@ -24,7 +24,7 @@ function render() {
   $("#sumStreak").textContent = streak ? streak + " hari" : "0 hari";
   $("#sumStreakMeta").textContent = streak
     ? "hari beruntun"
-    : list.length ? "streak putus — mulai lagi hari ini" : "belum ada streak";
+    : list.length ? "streak putus, mulai lagi hari ini" : "belum ada streak";
 
   const series = dailySeries(list, 7);
   const weekMenit = series.reduce((a, d) => a + d.minutes, 0);

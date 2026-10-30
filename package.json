@@ -3,7 +3,7 @@
   "private": false,
   "version": "0.1.0",
   "type": "module",
-  "description": "Jurnal belajar harian yang berjalan lokal di browser — sesi, durasi, refleksi, dan ringkasan.",
+  "description": "Jurnal belajar harian yang berjalan lokal di browser: sesi, durasi, refleksi, dan ringkasan.",
   "license": "MIT",
   "scripts": {
     "dev": "vite",
