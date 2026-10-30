@@ -1,0 +1,17 @@
+{
+  "name": "belajarlog",
+  "private": false,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Jurnal belajar harian yang berjalan lokal di browser — sesi, durasi, refleksi, dan ringkasan.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "vite": "^5.4.11"
+  }
+}

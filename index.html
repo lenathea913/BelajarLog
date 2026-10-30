@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>BelajarLog — Jurnal Belajar Harian</title>
+<link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v13"/><path d="M4 19h16"/><path d="M8 8h8M8 12h6"/></svg>
+      </span>
+      <h1>BelajarLog</h1>
+    </div>
+    <p class="tagline">Jurnal belajar harian — lokal, tanpa akun</p>
+  </div>
+</header>
+
+<main>
+  <section aria-labelledby="ringkasan-h">
+    <div class="section-head">
+      <h2 id="ringkasan-h">Ringkasan</h2>
+      <p class="hint" id="rowCount" aria-live="polite"></p>
+    </div>
+    <div class="ledger">
+      <div class="stat">
+        <span class="stat-label">Hari ini</span>
+        <span class="stat-value num" id="sumToday">—</span>
+        <span class="stat-note" id="sumTodayMeta">—</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Total</span>
+        <span class="stat-value num" id="sumTotal">—</span>
+        <span class="stat-note" id="sumTotalMeta">—</span>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="catat-h">
+    <div class="section-head">
+      <h2 id="catat-h">Catat sesi</h2>
+      <p class="hint">Isi singkat cukup — yang penting konsisten</p>
+    </div>
+    <form class="form" id="sessionForm" novalidate>
+      <div class="field">
+        <label for="fTopic">Topik <span class="req">*</span></label>
+        <input type="text" id="fTopic" name="topic" placeholder="mis. Latihan array & objek" autocomplete="off" required>
+      </div>
+      <div class="field">
+        <label for="fMinutes">Durasi (menit) <span class="req">*</span></label>
+        <input type="number" id="fMinutes" name="minutes" min="1" step="1" inputmode="numeric" placeholder="45" required>
+      </div>
+      <div class="field">
+        <label for="fDate">Tanggal</label>
+        <input type="date" id="fDate" name="date">
+      </div>
+      <div class="field wide">
+        <label for="fNote">Refleksi</label>
+        <input type="text" id="fNote" name="note" placeholder="apa yang sudah paham, apa yang masih ragu…" autocomplete="off">
+      </div>
+      <div class="actions">
+        <p class="form-note" id="formNote" hidden></p>
+        <button type="submit" class="btn-primary">Simpan sesi</button>
+      </div>
+    </form>
+  </section>
+
+  <section aria-labelledby="riwayat-h">
+    <div class="section-head">
+      <h2 id="riwayat-h">Riwayat</h2>
+      <p class="hint">Terbaru di atas</p>
+    </div>
+    <div class="empty" id="emptyState" hidden>
+      <p>Belum ada sesi. Catat sesi belajar pertama — sesingkat 15 menit pun sudah terhitung.</p>
+    </div>
+    <ul class="list" id="sessionList"></ul>
+  </section>
+</main>
+
+<footer>Data tersimpan lokal di browser ini (localStorage). Tidak ada yang dikirim ke server.</footer>
+
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
