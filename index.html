@@ -33,11 +33,31 @@
         <span class="stat-value num" id="sumToday">—</span>
         <span class="stat-note" id="sumTodayMeta">—</span>
       </div>
+      <div class="stat streak">
+        <span class="stat-label">Streak</span>
+        <span class="stat-value num" id="sumStreak">—</span>
+        <span class="stat-note" id="sumStreakMeta">—</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">7 hari terakhir</span>
+        <span class="stat-value num" id="sumWeek">—</span>
+        <span class="stat-note" id="sumWeekMeta">—</span>
+      </div>
       <div class="stat">
         <span class="stat-label">Total</span>
         <span class="stat-value num" id="sumTotal">—</span>
         <span class="stat-note" id="sumTotalMeta">—</span>
       </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="grafik-h">
+    <div class="section-head">
+      <h2 id="grafik-h">Grafik 7 hari</h2>
+      <p class="hint" id="weekHint"></p>
+    </div>
+    <div class="chart-card">
+      <div class="chart" id="weekChart" role="img" aria-label="Durasi belajar per hari selama 7 hari terakhir"></div>
     </div>
   </section>
 
@@ -74,7 +94,18 @@
     <div class="section-head">
       <h2 id="riwayat-h">Riwayat</h2>
       <p class="hint">Terbaru di atas</p>
+      <div class="spacer"></div>
+      <div class="toolbar">
+        <button type="button" class="btn-ghost" id="exportCsv" title="Unduh seluruh sesi sebagai file CSV">Ekspor CSV</button>
+        <button type="button" class="btn-ghost" id="importCsv" title="Impor sesi dari file CSV (format Ekspor CSV atau kolom umum)">Impor CSV</button>
+        <input type="file" id="importFile" accept=".csv,text/csv" hidden>
+        <button type="button" class="btn-ghost" id="backupBtn" title="Unduh seluruh jurnal sebagai file JSON">Backup JSON</button>
+        <button type="button" class="btn-ghost" id="restoreBtn" title="Pulihkan dari file backup — isi digabungkan">Pulihkan</button>
+        <input type="file" id="restoreFile" accept="application/json,.json" hidden>
+      </div>
     </div>
+    <p class="form-note" id="csvNote" hidden aria-live="polite"></p>
+    <p class="form-note" id="backupNote" hidden aria-live="polite"></p>
     <div class="empty" id="emptyState" hidden>
       <p>Belum ada sesi. Catat sesi belajar pertama — sesingkat 15 menit pun sudah terhitung.</p>
     </div>

@@ -1,23 +1,43 @@
 /* ============================================================
-   BelajarLog — main.js : render ringkasan & daftar sesi,
-   form pencatatan, hapus sesi, init.
+   BelajarLog — main.js : render ringkasan (termasuk streak &
+   grafik 7 hari), form pencatatan, hapus sesi, ekspor/impor
+   CSV, backup/pulihkan JSON, init.
    ============================================================ */
 import {
-  load, addSession, removeSession, sortedSessions, summarize,
-  isoLocal, dateLabel, minutesLabel, esc
+  $, load, addSession, removeSession, sortedSessions, summarize,
+  computeStreak, dailySeries, isoLocal, dateLabel, dayLabel, minutesLabel, esc
 } from "./store.js";
+import { initCsv } from "./csv.js";
+import { initBackup } from "./backup.js";
 
-const $ = (s, r = document) => r.querySelector(s);
+const pad = (n) => String(n).padStart(2, "0");
 
 function render() {
   const list = sortedSessions();
   const sum = summarize(list);
 
+  /* kartu ringkasan */
   $("#sumToday").textContent = minutesLabel(sum.menitHariIni);
   $("#sumTodayMeta").textContent = sum.sesiHariIni + " sesi hari ini";
+
+  const streak = computeStreak(list);
+  $("#sumStreak").textContent = streak ? streak + " hari" : "0 hari";
+  $("#sumStreakMeta").textContent = streak
+    ? "hari beruntun"
+    : list.length ? "streak putus — mulai lagi hari ini" : "belum ada streak";
+
+  const series = dailySeries(list, 7);
+  const weekMenit = series.reduce((a, d) => a + d.minutes, 0);
+  const hariAktif = series.filter((d) => d.minutes > 0).length;
+  $("#sumWeek").textContent = minutesLabel(weekMenit);
+  $("#sumWeekMeta").textContent = hariAktif + " hari belajar";
+
   $("#sumTotal").textContent = minutesLabel(sum.totalMenit);
   $("#sumTotalMeta").textContent = sum.totalSesi + " sesi tercatat";
 
+  renderChart(series, weekMenit);
+
+  /* daftar sesi */
   const empty = $("#emptyState");
   const rows = $("#sessionList");
   empty.hidden = list.length > 0;
@@ -38,6 +58,30 @@ function render() {
     .join("");
 
   $("#rowCount").textContent = list.length ? list.length + " sesi" : "";
+  $("#exportCsv").disabled = list.length === 0;
+}
+
+/** batang durasi per hari; tinggi sebanding menit, hari tanpa sesi tetap terlihat */
+function renderChart(series, weekMenit) {
+  const chart = $("#weekChart");
+  const max = Math.max(...series.map((d) => d.minutes), 1);
+
+  $("#weekHint").textContent = weekMenit
+    ? `${minutesLabel(weekMenit)} total · ${series.filter((d) => d.minutes > 0).length}/7 hari aktif`
+    : "Belum ada sesi dalam 7 hari terakhir";
+
+  chart.innerHTML = series
+    .map((d) => {
+      const h = d.minutes > 0 ? Math.max(4, (d.minutes / max) * 100) : 0;
+      const today = d.date === isoLocal(new Date()) ? " is-today" : "";
+      return `<div class="bar-col${today}">
+        <span class="bar-val num">${d.minutes ? minutesLabel(d.minutes) : ""}</span>
+        <span class="bar${d.minutes ? " on" : ""}" style="height:${h.toFixed(1)}%"
+              title="${dateLabel(d.date)} · ${d.minutes ? minutesLabel(d.minutes) : "tidak ada sesi"}"></span>
+        <span class="bar-day">${dayLabel(d.date)}</span>
+      </div>`;
+    })
+    .join("");
 }
 
 /* ---------- form ---------- */
@@ -58,7 +102,7 @@ function initForm() {
     addSession({
       date: form.date.value || isoLocal(new Date()),
       topic,
-      minutes,
+      minutes: Math.round(minutes),
       note: form.note.value.trim()
     });
     form.topic.value = "";
@@ -95,4 +139,6 @@ function initList() {
 load();
 initForm();
 initList();
+initCsv(render);
+initBackup(render);
 render();

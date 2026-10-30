@@ -6,6 +6,8 @@
 
 const KEY_SESSIONS = "belajarlog.sessions.v1";
 
+const $ = (s, r = document) => r.querySelector(s);
+
 let sessions = [];
 
 /* ---------- storage ---------- */
@@ -65,6 +67,11 @@ function dateLabel(iso) {
   );
 }
 
+/** label hari pendek untuk sumbu grafik ("Sen", "Sel", …) */
+function dayLabel(iso) {
+  return new Intl.DateTimeFormat("id-ID", { weekday: "short" }).format(new Date(iso + "T00:00:00"));
+}
+
 /** menit → "45m" / "1j 25m" */
 function minutesLabel(total) {
   const m = Math.round(Number(total) || 0);
@@ -92,7 +99,70 @@ function summarize(list) {
   };
 }
 
+/* ---------- turunan: streak & deret harian ---------- */
+/**
+ * Jumlah hari beruntun yang punya minimal satu sesi.
+ * Berakhir pada hari ini; bila hari ini belum ada sesi tetapi kemarin ada,
+ * streak masih dianggap hidup (dihitung mundur dari kemarin).
+ */
+function computeStreak(list) {
+  const days = new Set(list.map((s) => s.date));
+  if (!days.size) return 0;
+
+  const cursor = new Date();
+  if (!days.has(isoLocal(cursor))) {
+    cursor.setDate(cursor.getDate() - 1);
+    if (!days.has(isoLocal(cursor))) return 0;
+  }
+
+  let n = 0;
+  while (days.has(isoLocal(cursor))) {
+    n++;
+    cursor.setDate(cursor.getDate() - 1);
+  }
+  return n;
+}
+
+/** deret menit per hari untuk N hari terakhir (berakhir hari ini) */
+function dailySeries(list, days = 7) {
+  const map = new Map();
+  list.forEach((s) => map.set(s.date, (map.get(s.date) || 0) + (Number(s.minutes) || 0)));
+
+  const now = new Date();
+  const out = [];
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date(now);
+    d.setDate(now.getDate() - i);
+    const key = isoLocal(d);
+    out.push({ date: key, minutes: map.get(key) || 0 });
+  }
+  return out;
+}
+
+/* ---------- pulihkan (dipakai backup JSON) ---------- */
+/**
+ * Gabungkan sesi dari file backup — data lama tidak hilang.
+ * @returns {{ok:boolean, added?:number}}
+ */
+function restoreSessions(list) {
+  if (!Array.isArray(list)) return { ok: false };
+  const valid = list.filter((s) => s && typeof s === "object" && s.id && s.date && s.topic);
+  if (!valid.length) return { ok: false };
+
+  const seen = new Set(sessions.map((s) => s.id));
+  let added = 0;
+  valid.forEach((s) => {
+    if (seen.has(s.id)) return;
+    sessions.push(s);
+    seen.add(s.id);
+    added++;
+  });
+  if (added) save();
+  return { ok: true, added };
+}
+
 export {
-  load, save, addSession, removeSession, sortedSessions, summarize,
-  isoLocal, dateLabel, minutesLabel, esc
+  $, load, save, addSession, removeSession, sortedSessions, summarize,
+  computeStreak, dailySeries, restoreSessions,
+  isoLocal, dateLabel, dayLabel, minutesLabel, esc
 };

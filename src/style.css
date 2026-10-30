@@ -105,7 +105,30 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px 
 .empty { border: 1px dashed var(--line-strong); border-radius: var(--radius); padding: 24px; text-align: center; color: var(--muted); }
 footer { border-top: 1px solid var(--line); color: var(--muted-2); font-size: .78rem; text-align: center; padding: 16px var(--pad) 28px; }
 
+/* ---------- kartu streak & grafik ---------- */
+.stat.streak { border-color: rgba(227, 168, 60, .45); }
+.stat.streak .stat-value { color: var(--accent); }
+.spacer { flex: 1; }
+.toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-left: auto; }
+.btn-ghost:disabled { opacity: .45; cursor: not-allowed; }
+.form-note { font-size: .8rem; }
+#csvNote, #backupNote { margin-top: 8px; }
+.form-note.pos { color: var(--profit); }
+.form-note.neg { color: var(--loss); }
+
+.chart-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; }
+.chart { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; align-items: end; height: 190px; }
+.bar-col { display: grid; grid-template-rows: auto 1fr auto; gap: 6px; height: 100%; align-items: end; justify-items: center; }
+.bar { width: min(46px, 70%); border-radius: 6px 6px 3px 3px; background: var(--surface-2); border: 1px solid var(--line); align-self: end; min-height: 0; }
+.bar.on { background: linear-gradient(180deg, rgba(227, 168, 60, .9), rgba(227, 168, 60, .35)); border-color: rgba(227, 168, 60, .6); }
+.bar-col.is-today .bar-day { color: var(--accent); font-weight: 700; }
+.bar-val { font-size: .72rem; color: var(--muted); white-space: nowrap; }
+.bar-day { font-size: .72rem; color: var(--muted-2); }
+
 @media (max-width: 640px) {
   .row { flex-direction: column; align-items: stretch; }
   .btn-ghost { align-self: flex-end; }
+  .toolbar { margin-left: 0; width: 100%; }
+  .chart { gap: 6px; height: 160px; }
+  .bar-val { font-size: .64rem; }
 }

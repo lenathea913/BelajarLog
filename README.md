@@ -10,12 +10,16 @@ Aplikasi **jurnal belajar harian** yang berjalan 100% lokal di browser — Vite 
 
 Masalahnya sederhana: orang belajar tiap hari, tapi catatannya tersebar di notes, chat, dan buku tulis — sehingga "sebenarnya sudah berapa jam minggu ini?" tidak pernah terjawab.
 
-## ✨ Fitur (MVP saat ini)
+## ✨ Fitur
 
 - **Catat sesi belajar** — topik, durasi (menit), tanggal, dan refleksi singkat
-- **Ringkasan instan** — total menit hari ini + jumlah sesi, serta total seluruh riwayat
+- **Ringkasan instan** — menit hari ini, **streak harian**, total 7 hari terakhir, dan total seluruh riwayat
+- **Streak hari beruntun** — masih dianggap hidup kalau hari ini belum belajar tapi kemarin iya
+- **Grafik 7 hari** — batang durasi per hari, hari tanpa sesi tetap terlihat
 - **Riwayat terbaru di atas** — daftar sesi dengan tanggal & durasi
 - **Hapus sesi** dengan konfirmasi dua langkah (tanpa dialog sistem yang membekukan halaman)
+- **Ekspor & impor CSV** — kolom `Tanggal, Topik, Menit, Refleksi`; impor juga menerima alias kolom umum (`date`, `topic`, `minutes`, …) dengan deteksi duplikat
+- **Backup & pulihkan JSON** — unduh `belajarlog-backup-YYYY-MM-DD.json`; saat dipulihkan isi file **digabungkan**, data lama tidak hilang
 - **Tanpa jaringan** — semua data di localStorage browser masing-masing
 
 ## 🚀 Mulai cepat
@@ -41,11 +45,13 @@ npm run dev     # lalu buka http://localhost:5175
 
 ```
 BelajarLog/
-├── index.html        # ringkasan, form catat sesi, riwayat
+├── index.html        # ringkasan, grafik 7 hari, form catat sesi, riwayat
 ├── vite.config.js    # port dikunci, output build
 └── src/
-    ├── main.js       # render, form, hapus (konfirmasi 2 langkah), init
-    ├── store.js      # state, localStorage, format durasi/tanggal, ringkasan
+    ├── main.js       # render (ringkasan, streak, grafik), form, hapus, init
+    ├── store.js      # state, localStorage, format durasi/tanggal, streak, deret harian
+    ├── csv.js        # ekspor & impor CSV (alias kolom, deteksi duplikat)
+    ├── backup.js     # backup & pulihkan file JSON (merge)
     └── style.css     # token & komponen visual
 ```
 
@@ -55,9 +61,8 @@ Konvensi: modul kecil satu-tanggung-jawab, komentar bahasa Indonesia, tanpa fram
 
 Ide berikutnya, dikerjakan per langkah kecil — lihat [Issues](https://github.com/lenathea913/BelajarLog/issues):
 
-- **Streak harian** & target mingguan (hari beruntun belajar)
-- **Grafik mingguan/bulanan** — batang durasi per hari
-- **Ekspor/impor CSV & backup JSON** agar data tidak terkunci di satu browser
+- **Target mingguan** — mis. “5 jam/minggu”, dengan sisa yang tersisa hari ini
+- **Grafik bulanan** — heatmap menit per hari seperti kalender
 - **Filter & pencarian** topik, rentang tanggal
 - **Pengingat lembut** saat hari hampir habis tanpa sesi (tanpa notifikasi push)
 - Mode tema terang
@@ -73,9 +78,10 @@ Bug atau ide fitur? Buka [Issues](https://github.com/lenathea913/BelajarLog/issu
 
 ## ⚠️ Catatan & keterbatasan
 
-- **Tidak ada sinkronisasi antar perangkat** — data menempel ke browser & origin (port) tempat kamu mengetik.
+- **Tidak ada sinkronisasi antar perangkat** — data menempel ke browser & origin (port) tempat kamu mengetik. Untuk pindah perangkat, pakai **Ekspor CSV** atau **Backup JSON**.
+- **Backup JSON digabungkan, bukan menimpa** — sesi lama yang sudah ada (menurut `id`) tidak akan terduplikasi, tapi sesi yang kamu hapus bisa muncul lagi bila file backup lama dipulihkan.
+- **Duplikat impor CSV dideteksi lewat isi** (tanggal + topik + menit + refleksi) — dua sesi identik yang memang kamu catat dua kali akan dianggap duplikat.
 - **Tidak ada notifikasi/pengingat** — aplikasi ini pasif; kamu yang membukanya.
-- Belum ada ekspor data; cadangkan manual lewat DevTools → Application → Local Storage bila perlu.
 
 ## 📄 Lisensi
 
