@@ -49,13 +49,16 @@ p { margin: 0; }
 .tagline { color: var(--muted-2); font-size: .8rem; }
 
 /* ---------- layout ---------- */
-main { max-width: 960px; margin: 0 auto; padding: clamp(18px, 3vw, 32px) var(--pad) 40px; display: grid; gap: 30px; }
+/* minmax(0,1fr): satu kolom yang tidak bisa melebihi lebar viewport,
+   supaya konten selebar heatmap menggeser halaman, bukan menggeser kartu */
+main { max-width: 960px; margin: 0 auto; padding: clamp(18px, 3vw, 32px) var(--pad) 40px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 30px; }
 .section-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px; }
 .hint { color: var(--muted-2); font-size: .8rem; }
 
 /* ---------- ledger ---------- */
-/* minmax 190px supaya 4 kartu muat sebaris pada lebar desktop */
-.ledger { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+/* minmax 179px: 4 kartu sebaris di desktop, 2 kartu di layar sempit,
+   tanpa membuat halaman bisa digeser ke samping */
+.ledger { display: grid; grid-template-columns: repeat(auto-fit, minmax(179px, 1fr)); gap: 12px; }
 .stat { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; display: grid; gap: 4px; }
 .stat-label { color: var(--muted); font-size: .76rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
 .stat-value { font-size: 1.7rem; font-weight: 650; }
@@ -103,6 +106,31 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px 
 .btn-ghost:hover { border-color: var(--line-strong); color: var(--text); }
 .btn-ghost.danger:hover, .btn-ghost.danger[data-armed="1"] { border-color: var(--loss); color: var(--loss); }
 
+/* ---------- riwayat: sidebar bulan di kiri ---------- */
+.history { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; align-items: start; }
+.history-main { min-width: 0; }
+.months { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+.month-btn {
+  flex: none; display: grid; gap: 2px; min-width: 152px; text-align: left;
+  padding: 9px 12px; font: inherit; color: var(--text);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+}
+.month-btn:hover { border-color: var(--line-strong); }
+.month-btn.on { border-color: var(--accent); background: rgba(59, 91, 219, .07); }
+.month-btn.on .month-name { color: var(--accent); }
+.month-name { font-weight: 650; font-size: .88rem; white-space: nowrap; }
+.month-meta { color: var(--muted-2); font-size: .75rem; white-space: nowrap; }
+.more-wrap { display: flex; justify-content: center; padding-top: 2px; }
+
+@media (min-width: 760px) {
+  .history { grid-template-columns: 218px minmax(0, 1fr); gap: 18px; }
+  .months {
+    flex-direction: column; overflow: visible; gap: 7px;
+    position: sticky; top: 72px; padding-bottom: 0;
+  }
+  .month-btn { min-width: 0; width: 100%; }
+}
+
 /* ---------- empty / footer ---------- */
 .empty { border: 1px dashed var(--line-strong); border-radius: var(--radius); padding: 24px; text-align: center; color: var(--muted); }
 footer { border-top: 1px solid var(--line); color: var(--muted-2); font-size: .78rem; text-align: center; padding: 16px var(--pad) 28px; }
@@ -127,7 +155,59 @@ footer { border-top: 1px solid var(--line); color: var(--muted-2); font-size: .7
 .bar-val { font-size: .72rem; color: var(--muted); white-space: nowrap; }
 .bar-day { font-size: .72rem; color: var(--muted-2); }
 
+/* ---------- kalender aktif (heatmap) ---------- */
+.heat-card {
+  --heat-cell: 11px;
+  --heat-gap: 3px;
+  margin-top: 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+.heat-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.heat-scroll { overflow-x: auto; overflow-y: hidden; padding-bottom: 6px; }
+.heat-inner { width: max-content; }
+.heat-months {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: var(--heat-cell);
+  gap: var(--heat-gap);
+  height: 15px;
+  font-size: .68rem;
+  color: var(--muted-2);
+}
+.heat-months span { grid-row: 1; white-space: nowrap; }
+.heat-grid {
+  display: grid;
+  grid-template-rows: repeat(7, var(--heat-cell));
+  grid-auto-flow: column;
+  grid-auto-columns: var(--heat-cell);
+  gap: var(--heat-gap);
+}
+.heat-cell {
+  width: var(--heat-cell);
+  height: var(--heat-cell);
+  box-sizing: border-box;
+  border-radius: 3px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+}
+.heat-cell.on { background: var(--accent); border-color: rgba(59, 91, 219, .55); }
+.heat-cell.is-future { background: transparent; border-color: transparent; }
+.heat-cell.is-today { outline: 2px solid var(--accent); outline-offset: 1px; }
+.heat-legend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  font-size: .72rem;
+  color: var(--muted-2);
+}
+.heat-sep { width: 1px; height: 13px; background: var(--line-strong); margin: 0 5px; }
+
 @media (max-width: 640px) {
+  .heat-card { --heat-cell: 12px; --heat-gap: 3px; padding: 14px; }
   .row { flex-direction: column; align-items: stretch; }
   .btn-ghost { align-self: flex-end; }
   .toolbar { margin-left: 0; width: 100%; }

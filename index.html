@@ -51,6 +51,28 @@
         <span class="stat-note" id="sumTotalMeta">…</span>
       </div>
     </div>
+
+    <div class="heat-card">
+      <div class="heat-head">
+        <span class="stat-label">Kalender aktif</span>
+        <p class="hint" id="heatHint"></p>
+      </div>
+      <div class="heat-scroll">
+        <div class="heat-inner">
+          <div class="heat-months" id="heatMonths" aria-hidden="true"></div>
+          <div class="heat-grid" id="heatGrid" role="img" aria-label="Kalender aktif 12 bulan terakhir"></div>
+        </div>
+      </div>
+      <div class="heat-legend">
+        <span>Belum belajar</span>
+        <span class="heat-cell" aria-hidden="true"></span>
+        <span class="heat-cell on" aria-hidden="true"></span>
+        <span>Aktif belajar</span>
+        <span class="heat-sep" aria-hidden="true"></span>
+        <span class="heat-cell is-today" aria-hidden="true"></span>
+        <span>Hari ini</span>
+      </div>
+    </div>
   </section>
 
   <section aria-labelledby="grafik-h">
@@ -111,7 +133,10 @@
     <div class="empty" id="emptyState" hidden>
       <p>Belum ada sesi. Catat sesi belajar pertama, sesingkat 15 menit pun sudah terhitung.</p>
     </div>
-    <ul class="list" id="sessionList"></ul>
+    <div class="history" id="historyBox">
+      <nav class="months" id="monthList" aria-label="Riwayat per bulan"></nav>
+      <div class="history-main" id="sessionList"></div>
+    </div>
   </section>
 </main>
 
