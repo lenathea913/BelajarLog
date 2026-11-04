@@ -6,6 +6,8 @@
 ![Vanilla JS](https://img.shields.io/badge/code-vanilla_JS-DAA520.svg)
 ![Local-first](https://img.shields.io/badge/data-local__first-3b5bdb)
 
+**Demo online:** <https://lenathea913.github.io/BelajarLog/> — build statis repo ini. Datanya tetap lokal di browser, jadi terbuka dalam keadaan kosong; pindahkan dari versi lokal lewat backup.
+
 > **English:** A free, open-source **daily learning journal** that runs fully local in your browser: no server, no account, no data leaves your machine. Log short study sessions (topic, duration, reflection) and get a daily streak, a 7-day chart, instant totals, CSV import/export and JSON backup. Built with vanilla JS + Vite, MIT licensed.
 
 **BelajarLog** adalah jurnal belajar harian yang berjalan **100% lokal** di browser (Vite + vanilla JS, data di **localStorage**). Tidak ada server, tidak ada akun, tidak ada permintaan jaringan.
@@ -46,6 +48,7 @@ npm run dev     # lalu buka http://localhost:5175
 | Perintah | Fungsi |
 | --- | --- |
 | `npm run dev` | server pengembangan (port **5175**, dikunci) |
+| `npm test` | unit test streak, ringkasan, dan impor CSV (`node --test`, tanpa dependensi) |
 | `npm run build` | build produksi ke `dist/` |
 | `npm run preview` | pratinjau hasil build |
 | `start.bat` | installer + server + buka browser (Windows) |
